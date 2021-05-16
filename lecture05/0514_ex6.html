@@ -41,10 +41,15 @@
             });
 
             //checked length is different with title length -> uncheck 'check'
+            //checked length is same with title length -> check 'check'
             $('input:checkbox[name=myCheck]').click(function () {
                 if ($('input:checkbox[name=myCheck]:checked').length != title.length) {
                     $('input:checkbox[name=check]').each(function (index, e) {
                         this.checked = false;
+                    }) 
+                } else if ($('input:checkbox[name=myCheck]:checked').length == title.length) {
+                    $('input:checkbox[name=check]').each(function (index, e) {
+                        this.checked = true;
                     }) 
                 }
             });
