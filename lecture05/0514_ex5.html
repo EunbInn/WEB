@@ -14,10 +14,17 @@
                 let pwd = $('#pw').val().length;
                 let gender = $('input:radio[name=gender]:checked').length;
                 let job = $('#job option:selected').val();
-                console.log(job);
-                if (idCheck.includes('@') == false || hobby < 3 
-                    || pwd < 5 || gender < 1 || job == 'blank') {
-                    alert('회원가입 형식에 맞지 않습니다.');
+
+                if (idCheck.includes('@') == false) {
+                    alert('아이디 형식을 확인해주세요.');
+                } else if (hobby < 3) {
+                    alert('취미를 3개 이상 선택해주세요.');
+                } else if (pwd < 5) {
+                    alert('비밀번호를 5자리 이상 입력해주세요.');
+                } else if (gender < 1) {
+                    alert('성별을 선택해주세요.');
+                } else if (job == 'blank') {
+                    alert('직업을 선택해주세요.');
                 } else {
                     alert('가입이 승인되었습니다.');
                 }
@@ -67,7 +74,7 @@
 
             <div>
                 <span style="margin-right: 35px;">비밀번호</span>
-                <input type="password" id="pw" placeholder="5자리 이상 입력">
+                <input type="password" id="pw" maxlength="15" placeholder="5자리 이상 입력">
             </div>
 
             <div>

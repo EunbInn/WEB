@@ -9,13 +9,13 @@
     <script>
 
         $(function() {
-
+            //click input button -> appears color buttons and text that user input
             $('#inputBtn').click(function() {
                 let txt = $('#inputStr').val();
                 let colorBtn = "<div>" 
-                            + "<button type='button' id='btnRed'>빨강</button>"
-                            + "<button type='button' id='btnGreen'>초록</button>"
-                            + "<button type='button' id='btnBlue'>파랑</button>"
+                            + "<button class='btn' id='red'>빨강</button>"
+                            + "<button class='btn' id='green'>초록</button>"
+                            + "<button class='btn' id='blue'>파랑</button>"
                             + "</div>";
 
                 if (txt != "" && txt != null) {
@@ -23,28 +23,19 @@
                 } else {
                     alert('텍스트를 입력해주세요');
                 }
-
+                //text input box reset
                 $('#inputStr').val('');
-            });
 
-            $('#btnRed').click(function() {
-               changeColor("red");
+                //change color of text
+                $('.btn').click(function() {
+                    let color = $(this).attr('id');
+                    alert(color + '(으)로 변경됩니다.');
+                    $('#txt').css('color', color)
+                
+                });
             });
+        });
 
-            $('#btnGreen').click(function() {
-                changeColor("green");
-            });
-
-            $('#btnBlue').click(function() {
-                changeColor("blue");
-            });
-           
-        })
-
-        function changeColor(color) {
-            alert(color + '(으)로 변경됩니다');
-            $('#txt').css('color', color);
-        }
    
     </script>
 

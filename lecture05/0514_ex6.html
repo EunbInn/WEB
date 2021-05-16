@@ -16,7 +16,6 @@
                         //get log of title which is checked
                         console.log(title[index].textContent);
                     }
-
                 });
                 //if there's nothing checked -> alert
             if ($('input:checkbox[name=myCheck]:checked').length == 0) {
@@ -38,6 +37,15 @@
                         .each(function (index, e) {
                             this.checked = false;
                         });
+                } 
+            });
+
+            //checked length is different with title length -> uncheck 'check'
+            $('input:checkbox[name=myCheck]').click(function () {
+                if ($('input:checkbox[name=myCheck]:checked').length != title.length) {
+                    $('input:checkbox[name=check]').each(function (index, e) {
+                        this.checked = false;
+                    }) 
                 }
             });
         })

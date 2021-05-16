@@ -6,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
  
-    <script>
-        function change(txtColor) {
-            let getColor = document.getElementById("txt");
-            getColor.style.color = txtColor;
-        }
+    <script>    
 
         function getText() {
             let html = document.getElementById("inputStr");
@@ -26,14 +22,17 @@
             html.value = "";    
         }
 
-        function mkButton() {
-            let alRed = "alert('빨간색으로 변경됩니다')";
-            let alGreen = "alert('초록색으로 변경됩니다')";
-            let alBlue = "alert('파란색으로 변경됩니다')";
+        function change(txtColor) {
+            alert( txtColor + '(으)로 색상이 변경됩니다.');
+            let getColor = document.getElementById("txt");
+            getColor.style.color = txtColor;
+        }
 
-            let btnRed = "<button type='button' onclick=\"" + change('red') + ", " + alRed + "\">빨강</button>"
-            let btnGreen = "<button type='button' onclick=\"" + change('green') + ", " + alGreen + "\"'>초록</button>"
-            let btnBlue = "<button type='button' onclick=\"" + change('blue') + ", " + alBlue + "\">파랑</button>"
+        function mkButton() {
+
+            let btnRed = "<button type='button' onclick=\"change('red')\">빨강</button>"
+            let btnGreen = "<button type='button' onclick=\"change('green')\">초록</button>"
+            let btnBlue = "<button type='button' onclick=\"change('blue')\">파랑</button>"
 
             let colorBtn = "<div>" + btnRed + btnGreen + btnBlue + "</div>";
 

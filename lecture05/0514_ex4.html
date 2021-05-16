@@ -7,17 +7,14 @@
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        var cc = document.getElementsByClassName("btn");
 
-        // add class when user click button
-        for (var j = 0; j < cc.length; j++) {
-            cc[j].addEventListener('click', function() {
-                for (var i = 0; i < cc.length; i++) {
-                    cc[i].classList.remove("on");
-                }
-                this.classList.add("on");
-            });   
-        }
+        $(function() {
+            $('.btn').click(function() {
+                $('.btn').removeClass("on");
+                $(this).addClass("on");
+            })
+        })
+
     </script>
 </head>
 <style>

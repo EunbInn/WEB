@@ -12,7 +12,7 @@
                 let inputArt = prompt('기사를 입력하세요');
                 
                 if (inputArt != "" && inputArt != null) {
-                    // 공백 처음 나오는 부분서브트링하여 볼드 효과 줌
+                    // 공백 처음 나오는 부분 섭스트링하여 볼드 효과 줌
                     let name = inputArt.substring(0,inputArt.indexOf(" "));
                     let str = inputArt.substring(inputArt.indexOf(" "));
                     $('.bodyArticle').append('<div id="article"><b>' + name + '</b>' + str + '</div>');
@@ -57,7 +57,6 @@
             background-color: rgb(255, 255, 255);
             padding: 10px;
             text-align: justify;
-
         }
     </style>
 </head>
@@ -65,9 +64,7 @@
     <center>
         <div class="main">
             <div class="header">
-                <span id="title">
-                    기사 등록하기
-                </span>
+                <span id="title">기사 등록하기</span>
             </div>
             <div class="bodyArticle"></div>
             <div>
