@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        // window.addEventListener("keydown", function(event) {
+        //     console.log(event);
+        // });
+        let isAnimating = false;
+
+        function movePika(event) {
+            if (isAnimating) {
+                return;
+            }
+        }
+
+        $(function() { //on load 후 실행
+            var pikaX = 0, pikaY = 0, move = 10;
+            var pikaPX = $('#pika').position().top;
+            var pikaPY = $('#pika').position().left;
+
+            if (pikaPX < $('#box').width() && pikaPY < $('#box').height()
+                && pikaPX >= 0 && pikaPY >= 0) {
+                $('body').keydown(function(event) {
+                    var code = event.code;
+                    if (code == 'ArrowUp') {
+                        pikaY -= move;
+                    } else if (code == 'ArrowDown') {
+                        pikaY += move;
+                    } else if (code == 'ArrowLeft') {
+                        pikaX -= move;
+                    } else if (code == 'ArrowRight') {
+                        pikaX += move;
+                    }
+
+                    console.log($('#pika').position().top)
+
+                    $('#pika').animate({
+                        top: pikaY,
+                        left: pikaX
+                    }, 10);
+                });
+            }
+
+        })
+    </script>
+    <style>
+        #box {
+            width: 500px;
+            height: 400px;;
+            border: solid 1px black;
+            position: relative;
+            overflow: hidden;
+        }
+    
+        #pika {
+            width: 70px;
+            top: 0;
+            left: 0;
+            position: absolute;
+            
+        }
+    
+    </style>
+</head>
+<body>
+    <div id="box">
+        <img id="pika" src="./pika.gif" alt="">
+    </div>
+</body>
+</html>

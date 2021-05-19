@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SuperMario</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        let score = 0; // 점수 전역변수로 선언 후 초기화
+        let isEnd = false;
+        let lifeCnt = 0;
+        let lifeImg = document.getElementsByClassName('heart');
+
+        $(function(){//on load 후 실행 
+ 
+            let isEnd = true;
+            $('#start').click(function() {
+                let gameStop = setInterval(function() {
+                    moveMush();
+
+                    if (isEnd == true) {
+                        clearInterval(gameStop);
+                    }
+
+                }, 1000);
+                ///sleep 다시 확인할 것
+                let checkLife = setInterval(async function() {
+                    if (marioDead()) {
+                        if (lifeCnt == 3){
+                            $('#enemy').stop();
+                            let htmlCode = "<img src='./gameover.png' id='overImg'>"
+                                                    + "<button id='retry'>Try Again</button>";
+                            $('#gameover').html(htmlCode);
+                            $('#mario').attr('src', './marioDead2.gif');
+                            Bye();
+                            isEnd = true;
+                            $('#retry').click(function() {
+                                document.location.href = "./0517_mario.html";
+                            });
+                        }
+                        await sleep(500);
+                        score -= 100;
+                        lifeCnt += 1;
+                        $('.heart:eq(' + (lifeCnt) +')').hide();
+                        
+                        
+                    } else {
+                        isEnd = false;
+                    }
+                    console.log(lifeCnt);
+                    // console.log(isEnd);
+                },100);
+
+
+                
+
+                setInterval(function() {
+                    if(fireAndMush()) {
+                        score += 200;
+                        showScore();
+                        $('#enemy').stop(true);
+                        $('#enemy').css('left', '120%');
+                        $('#fireball').stop();
+                        $('#fireball').css('left', '-30%');
+                    }
+                });
+                      
+            });
+
+            
+         
+        })
+            
+        //버섯 달려오는 속도 랜덤하게 주기
+        function moveMush() {
+                var speed = Math.ceil(Math.random() * 2000) + 1500; 
+                $('#enemy').animate({
+                    left: '-10%' 
+                    },speed , function() {
+                        if (!marioDead()) {
+                            score += 100;
+                            showScore();
+                        }
+                        $('#enemy').css('left', '120%');
+                            
+                });    
+        }
+
+        function sleep (delay) {
+            var start = new Date().getTime();
+            while (new Date().getTime() < start + delay);
+        }
+
+
+
+        function marioDead() {
+            var marioX = $('#mario').offset().left - $('#enemy').offset().left;
+            var marioY = $('#mario').offset().top - $('#enemy').offset().top;
+           
+            let distance = Math.sqrt((marioX * marioX) + (marioY * marioY));
+            let over = 100;
+            let dead = distance <= over;
+            return dead;      
+        }
+
+        //파이어볼과 버섯 충돌감지
+        function fireAndMush() {
+            var obX = $('#fireball').offset().left - $('#enemy').offset().left;
+            var obY = $('#fireball').offset().top - $('#enemy').offset().top;
+            let distance = Math.sqrt((obX * obX) + (obY * obY));
+            let over = 100;
+            let hit = distance <= over;
+            if (hit) {
+                
+            }
+            return hit;      
+        }
+ 
+        //마리오 점프모션
+        let isJump = false;
+        function jump() {
+            if(isJump) {
+                return;
+            }
+
+            isJump = true;
+            $('#mario').attr('src', './marioJump.png');
+            setTimeout(function(){
+                $('#mario').attr('src', './mariorun2.gif');
+            },700);
+            
+            $('#mario').animate({
+                    top: '-=140px',
+                    left: '+=40px'
+            },300, function() {
+                $('#mario').animate({
+                    top: '+=140px',
+                    left: '-=10px'
+                },400, function() {  
+                    $('#mario').animate({
+                        left:  '-=30px'
+                    },200, function() {
+                        isJump = false;
+                    });
+                });
+            });
+        }
+
+        //마리오의 장풍..
+        let isFire = false;
+        function fireball() {
+            if(isFire) {
+                return;
+            }
+            isFire = true;
+            let marioY = $('#mario').position().top + 40;
+            let marioX = $('#mario').position().left + 20;
+            $('#fireball').css({'top': marioY, 'left': marioX});
+            $('#fireball').animate({
+                left: '40%'
+            }, 400, function(){
+                $('#fireball').css('left', '-20%');
+            });
+            isFire = false;
+        }
+        
+
+        window.addEventListener('keydown', function(event) {
+            if (event.code == 'Space') {
+                jump();
+            }
+
+            if (event.code == 'KeyG') {  
+                fireball(); 
+            }
+            
+        })
+
+        function Bye() {
+            $('#mario').animate({
+                top: '-=190px',
+                left: '+=40px',
+            },400).animate({
+                    top: '+=500px'
+                }, 1000);
+            
+        }
+
+        function showScore() {
+            $('#score').html('score ' + score);
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'nanumMugunghwa';
+            src: url('./나눔손글씨\ 무궁화.ttf');
+        }
+
+        .box {
+            width: 100%;
+            height: 630px;
+            position: relative;
+            border: solid 1px black;
+            overflow: hidden;
+           
+        }
+
+        @keyframes sliding {
+            from {
+                left: 0%
+            }
+
+            to {
+                left: -100%
+            }
+        }
+
+        #bg {
+            margin: 0;
+            width: 200%;
+            height: 100%;
+            position: absolute;
+            background: url('./mariobg.png');
+            background-size: 50% 100%;
+            background-repeat: repeat-x;
+            animation: sliding 10s infinite linear;
+        }
+
+        #start {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-family:'nanumMugunghwa';
+            font-size: 40px;
+            border: solid 1px black;
+            cursor: pointer;
+        }
+
+        #mario {
+            width: 170px;
+            top: 430px;
+            left: 100px;
+            position: absolute;
+        }
+
+        #enemy {
+            width: 80px;
+            top: 500px; 
+            left: 110%;
+            position: absolute;
+        }
+
+        #overImg {
+            width: 400px;
+            top:100px;        
+            position: absolute;     
+        }
+
+        #gameover {
+            width: 400px;
+            left: 33%;
+            line-height: 600px;
+            position: absolute;
+            display: inline-block;
+        }
+
+        #fireball {
+            width: 90px;
+            position: absolute;
+            left: -20%;
+        }
+
+        #retry {
+            padding: 5px 20px;
+            border: double dotted black;
+            background-color: rgb(214, 45, 45);
+            color: black;
+            font-weight: bolder;
+            position: absolute;
+            cursor: pointer;
+            font-family:'nanumMugunghwa';
+            font-size: 40px;
+            margin-top: 100%;
+            margin-left: 30%;
+        }
+
+        #score {
+            left: 46%;
+            top:5px;
+            color: white;
+            font-size: 70px;
+            font-weight: bolder;
+            position: absolute;
+            font-family:'nanumMugunghwa';
+        }
+
+        #life {
+            display: inline-block;
+            position: absolute;
+            width: 250px;
+            left: 10px;
+            border: none;
+        }
+
+        .heart {
+            position: relative;
+            display: inline;
+            width: 50px;
+            margin: 20px 10px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <center>
+        <div class="main">
+            <div class="box">
+                
+                <div id="bg"></div>
+                <div id="gameover"></div>
+                <div id="score">score 0</div>
+                <div id="life">
+                    <img src="heart.png" id="ht1" class="heart">
+                    <img src="heart.png" id="ht2" class="heart">
+                    <img src="heart.png" id="ht3" class="heart">
+                </div>
+                <div>
+                    <div id="bomb">
+                        <img src="./fireball.png" id="fireball">
+                    </div>
+                    <img src="./mariorun2.gif" id="mario" alt="">
+                    <img src="./goomba.gif" id="enemy" alt="">
+                    
+                </div>
+                
+            </div>
+            <div>
+                <button id="start">Start!</button>
+            </div>
+        </div>
+    </center>
+    
+</body>
+</html>

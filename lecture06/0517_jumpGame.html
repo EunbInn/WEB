@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+         $(function() { //on load 후 실행
+             $('#start').click(function () {
+                 setInterval(moveMissile(), 10);
+             })
+
+            $('body').keydown(function(event) {
+                if (event.code == 'Space') {
+                    jumpPika();
+                }
+            });
+        })
+
+        function moveMissile() {
+            $('#missile').animate({
+                right: '100%'
+                },3000, function() {
+                    $('#missile').css('right', '-70px');
+                });
+        }
+
+        function jumpPika() {
+            $('#pika').animate({
+                    bottom: '200px',
+                    left: '120px'
+            }, function() {
+                $('#pika').animate({
+                    bottom: '50px',
+                    left: '100px'
+                }, function() {
+                    $('#pika').animate({
+                        left: '50px'
+                    },1200);
+                });
+            });
+        }
+    </script>
+    <style>
+        #box {
+            width: 700px;
+            height: 300px;
+            position: relative;
+            border: solid 1px black;
+            overflow: hidden;
+
+        }
+
+        #start {
+            margin-top: 10px;
+            margin-left: 300px;
+            padding: 10px 20px;
+            border: solid 1px black;
+            cursor: pointer;
+        }
+
+        #pika {
+            width : 100px;
+            left: 50px;
+            bottom: 50px;
+            position: absolute;
+        }
+
+        #missile {
+            width: 80px;
+            right: -70px;
+            bottom: 50px;
+            position: absolute;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <img id="pika" src="./pika.gif" alt="">
+        <img id="missile" src="./enemy.png" alt="">
+    </div>
+    <div>
+        <button id="start">Start!</button>
+    </div>
+</body>
+</html>

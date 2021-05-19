@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            let result =  Math.floor(Math.random() * (max - min)) + min;
+            console.log(result);
+            return result;
+
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <button onclick="getRandomInt(0,10.1)">random</button>
+    </div>
+    
+</body>
+</html>
